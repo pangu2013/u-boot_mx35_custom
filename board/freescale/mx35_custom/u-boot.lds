@@ -44,7 +44,7 @@ SECTIONS
 	  *(.text.load)		/*load bootloader*/
 	  *(.text.setup)	/*platform post lowlevel initial code*/
 	  *(.text.vect)	/*platform post lowlevel initial code*/
-	  board/freescale/mx35_3stack/libmx35_custom.a	(.text)
+	  board/freescale/mx35_custom/libmx35_custom.a	(.text)
 	  lib_arm/libarm.a		(.text)
 	  net/libnet.a			(.text)
 	  drivers/mtd/libmtd.a		(.text)
