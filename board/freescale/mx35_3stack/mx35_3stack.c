@@ -160,7 +160,7 @@ int board_init(void)
 			| PAD_CTL_PUE_PUD | PAD_CTL_ODE_OpenDrain);
 
 	mxc_iomux_set_pad(MX35_PIN_I2C1_CLK, pad);
-	mxc_iomux_set_pad(MX35_PIN_I2C1_DAT, pad);*/
+	mxc_iomux_set_pad(MX35_PIN_I2C1_DAT, pad);
 
 	/* setup pins for FEC */
 	mxc_request_iomux(MX35_PIN_FEC_TX_CLK, MUX_CONFIG_FUNC);

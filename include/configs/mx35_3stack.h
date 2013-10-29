@@ -98,9 +98,9 @@
 
 #define CONFIG_LOADADDR		0x80800000	/* loadaddr env var */
 
+//nick20131023_01 "ethprime=smc911x\0"
 #define	CONFIG_EXTRA_ENV_SETTINGS					\
 		"netdev=eth0\0"						\
-		//nick20131023_01 "ethprime=smc911x\0"					\
 		"ethprime=FEC0\0"					\
 		"uboot_addr=0xa0000000\0"				\
 		"uboot=u-boot.bin\0"			\
