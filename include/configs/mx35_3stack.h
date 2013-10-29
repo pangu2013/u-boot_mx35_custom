@@ -35,7 +35,9 @@
 #define CONFIG_DISPLAY_CPUINFO
 #define CONFIG_DISPLAY_BOARDINFO
 
-#define BOARD_LATE_INIT
+/* nick20131014_01 disable late init, because we don't adopt PMIC to distinguish board version */
+//#define BOARD_LATE_INIT
+
 /*
  * Disabled for now due to build problems under Debian and a significant increase
  * in the final file size: 144260 vs. 109536 Bytes.
@@ -98,7 +100,8 @@
 
 #define	CONFIG_EXTRA_ENV_SETTINGS					\
 		"netdev=eth0\0"						\
-		"ethprime=smc911x\0"					\
+		//nick20131023_01 "ethprime=smc911x\0"					\
+		"ethprime=FEC0\0"					\
 		"uboot_addr=0xa0000000\0"				\
 		"uboot=u-boot.bin\0"			\
 		"kernel=uImage\0"				\
@@ -115,10 +118,11 @@
 			"cp.b ${loadaddr} ${uboot_addr} ${filesize}; "	\
 			"setenv filesize; saveenv\0"
 
+/* nick20131014_02 disable SMC911X, there is no this module in our board */
 /*Support LAN9217*/
-#define CONFIG_SMC911X		1
-#define CONFIG_SMC911X_16_BIT 1
-#define CONFIG_SMC911X_BASE CS5_BASE_ADDR
+//#define CONFIG_SMC911X		1
+//#define CONFIG_SMC911X_16_BIT 1
+//#define CONFIG_SMC911X_BASE CS5_BASE_ADDR
 
 #define CONFIG_HAS_ETH1
 #define CONFIG_NET_MULTI 1
