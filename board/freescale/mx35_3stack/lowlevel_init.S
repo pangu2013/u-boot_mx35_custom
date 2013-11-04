@@ -365,7 +365,7 @@ setup_sdram_bank:
         strlo r3, [r0, #0x4]
         strhs r3, [r0, #0xC]
 
-        ldr r3, #0x93120000 /*=ESDCTL_0x92220000, rome,address width*/
+        ldr r3, =0x93120000 /*=ESDCTL_0x92220000, rome,address width*/
         strlo r3, [r0, #0x0]
         strhs r3, [r0, #0x8]
         mov r3, #0xDA
@@ -398,14 +398,14 @@ setup_sdram_bank:
 
 skip_set_mode:
         cmp r1, #CSD1_BASE_ADDR
-        ldr r3, #0xA3120000 /*=ESDCTL_0xA2220000, rome,address width*/
+        ldr r3, =0xA3120000 /*=ESDCTL_0xA2220000, rome,address width*/
         strlo r3, [r0, #0x0]
         strhs r3, [r0, #0x8]
         mov r3, #0xDA
         strb r3, [r1]
         strb r3, [r1]
 
-        ldr r3, #0xB3120000 /*=ESDCTL_0xB2220000, rome,address width*/
+        ldr r3, =0xB3120000 /*=ESDCTL_0xB2220000, rome,address width*/
         strlo r3, [r0, #0x0]
         strhs r3, [r0, #0x8]
         tst r2, #0x1
@@ -420,7 +420,7 @@ skip_set_mode:
         strb r3, [r1, r4]
 
         cmp r1, #CSD1_BASE_ADDR
-        ldr r3, #0x83128080 /*=ESDCTL_0x82228080, rome */
+        ldr r3, =0x83128080 /*=ESDCTL_0x82228080, rome */
         strlo r3, [r0, #0x0]
         strhs r3, [r0, #0x8]
 
