@@ -232,7 +232,7 @@
 
 .macro setup_sdram
         ldr r0, =ESDCTL_BASE_ADDR
-        mov r3, #0x8000/*#0x2000, rome, refresh rate, W94AD2KB has 16k rows*/
+        mov r3, #0x2000
         str r3, [r0, #0x0]
         str r3, [r0, #0x8]
 
@@ -240,7 +240,7 @@
         mov fp, lr
 
 	mov r5, #0x00
-        mov r2, #0x01 /*#0x00, rome, for mddr*/
+        mov r2, #0x00
         mov r1, #CSD0_BASE_ADDR
         bl setup_sdram_bank
         cmp r3, #0x0
@@ -365,7 +365,7 @@ setup_sdram_bank:
         strlo r3, [r0, #0x4]
         strhs r3, [r0, #0xC]
 
-        ldr r3, =0x93120000 /*=ESDCTL_0x92220000, rome,address width*/
+        ldr r3, =ESDCTL_0x92220000
         strlo r3, [r0, #0x0]
         strhs r3, [r0, #0x8]
         mov r3, #0xDA
@@ -398,14 +398,14 @@ setup_sdram_bank:
 
 skip_set_mode:
         cmp r1, #CSD1_BASE_ADDR
-        ldr r3, =0xA3120000 /*=ESDCTL_0xA2220000, rome,address width*/
+        ldr r3, =ESDCTL_0xA2220000
         strlo r3, [r0, #0x0]
         strhs r3, [r0, #0x8]
         mov r3, #0xDA
         strb r3, [r1]
         strb r3, [r1]
 
-        ldr r3, =0xB3120000 /*=ESDCTL_0xB2220000, rome,address width*/
+        ldr r3, =ESDCTL_0xB2220000
         strlo r3, [r0, #0x0]
         strhs r3, [r0, #0x8]
         tst r2, #0x1
@@ -420,7 +420,7 @@ skip_set_mode:
         strb r3, [r1, r4]
 
         cmp r1, #CSD1_BASE_ADDR
-        ldr r3, =0x83128080 /*=ESDCTL_0x82228080, rome */
+        ldr r3, =ESDCTL_0x82228080
         strlo r3, [r0, #0x0]
         strhs r3, [r0, #0x8]
 
