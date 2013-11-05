@@ -152,6 +152,55 @@ int board_init(void)
 	__REG(CCM_BASE_ADDR + CLKCTL_CGR0) |= 0x003F0000;
 	__REG(CCM_BASE_ADDR + CLKCTL_CGR1) |= 0x00030FFF;
 
+	// IO config 2013.11.5
+	// LED1_TEST
+	mxc_request_iomux(MX35_PIN_STXD5, MUX_CONFIG_GPIO);  
+	__REG(GPIO1_BASE_ADDR + 0x04) |= 1 << 0;       // set  output
+	__REG(GPIO1_BASE_ADDR + 0x00) |= 1 << 0;       // set  high
+
+	// LED2_TEST
+	mxc_request_iomux(MX35_PIN_SRXD5, MUX_CONFIG_GPIO);  
+	__REG(GPIO1_BASE_ADDR + 0x04) |= 1 << 1;       // set  output
+	__REG(GPIO1_BASE_ADDR + 0x00) |= 1 << 1;       // set  high
+
+	// LED flash light (module 1)
+	// LED_BOOST
+	mxc_request_iomux(MX35_PIN_SCK5, MUX_CONFIG_GPIO);  
+	__REG(GPIO1_BASE_ADDR + 0x04) |= 1 << 2;       // set  output
+	__REG(GPIO1_BASE_ADDR + 0x00) |= 1 << 2;       // set  high
+	// LED_HIGH_BOOST#
+	mxc_request_iomux(MX35_PIN_STXFS4, MUX_CONFIG_GPIO);  
+	__REG(GPIO2_BASE_ADDR + 0x04) |= 1 << 31;       // set  output
+	__REG(GPIO2_BASE_ADDR + 0x00) |= 1 << 31;       // set  high	
+
+	// LED flash light (module 2)
+	// LED_TORCH
+	mxc_request_iomux(MX35_PIN_SCK4, MUX_CONFIG_GPIO);  
+	__REG(GPIO2_BASE_ADDR + 0x04) |= 1 << 30;       // set  output
+	__REG(GPIO2_BASE_ADDR + 0x00) &= (~(1 << 30));       // set  low
+	// LED_MODE
+	mxc_request_iomux(MX35_PIN_STXFS5, MUX_CONFIG_GPIO); 
+	__REG(GPIO1_BASE_ADDR + 0x04) |= 1 << 3;       // set  output
+	__REG(GPIO1_BASE_ADDR + 0x00) &= (~(1 << 3));       // set  low
+
+	// config LAN8710 reset 
+	// PHY_RESET#
+	mxc_request_iomux(MX35_PIN_GPIO3_0, MUX_CONFIG_FUNC); 
+	__REG(GPIO3_BASE_ADDR + 0x04) |= 1 << 0;       // set  output
+	__REG(GPIO3_BASE_ADDR + 0x00) |= 1 << 0;       // set  high
+
+	// config camera sensor STANDBY
+	// SENSOR_STANDBY
+	mxc_request_iomux(MX35_PIN_ATA_DATA9, MUX_CONFIG_GPIO); 
+	__REG(GPIO2_BASE_ADDR + 0x04) |= 1 << 22;       // set  output
+	__REG(GPIO2_BASE_ADDR + 0x00) |= 1 << 22;       // set  high standby
+
+	// SENSOR_EXPOSURE
+	mxc_request_iomux(MX35_PIN_ATA_DATA10, MUX_CONFIG_GPIO); 
+	__REG(GPIO2_BASE_ADDR + 0x04) |= 1 << 23;       // set  output
+	__REG(GPIO2_BASE_ADDR + 0x00) &= (~(1 << 23));       // set  high standby
+	
+	
 	/* setup pins for I2C1 */
 	mxc_request_iomux(MX35_PIN_I2C1_CLK, MUX_CONFIG_SION);
 	mxc_request_iomux(MX35_PIN_I2C1_DAT, MUX_CONFIG_SION);
@@ -280,6 +329,7 @@ int board_late_init(void)
 		mxc_iomux_set_input(MUX_IN_GPIO1_IN_5, INPUT_CTL_PATH0);
 		__REG(GPIO1_BASE_ADDR + 0x04) |= 1 << 5;
 		__REG(GPIO1_BASE_ADDR) |= 1 << 5;
+		
 	} else
 		printf("i.MX35 CPU board version 1.0\n");
 
