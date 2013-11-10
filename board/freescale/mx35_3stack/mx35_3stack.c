@@ -372,7 +372,7 @@ int board_late_init(void)
 
 int checkboard(void)
 {
-	printf("Board: MX35 3STACK ");
+	printf("Board: iMX353 Rev00 ");
 
 	if (system_rev & CHIP_REV_2_0)
 		printf("2.0 [");

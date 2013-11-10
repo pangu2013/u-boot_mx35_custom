@@ -98,6 +98,15 @@
 
 #define CONFIG_LOADADDR		0x80800000	/* loadaddr env var */
 
+//nick20131110_01 add eth relative definitions start
+#define CONFIG_ETHADDR  00:D0:10:11:64:01
+/*#define CONFIG_IPADDR   192.168.1.251
+#define CONFIG_SERVERIP 192.168.1.1
+#define CONFIG_GATEWAYIP 192.168.1.1
+#define CONFIG_NETMASK  255.255.255.0*/
+//nick20131110_01 add eth relative definitions end
+
+
 //nick20131023_01 "ethprime=smc911x\0"
 #define	CONFIG_EXTRA_ENV_SETTINGS					\
 		"netdev=eth0\0"						\

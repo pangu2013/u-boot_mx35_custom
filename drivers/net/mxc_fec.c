@@ -610,6 +610,15 @@ int fec_init(struct eth_device *dev, bd_t *bd)
 	int i;
 	u8 *ea = NULL;
 
+	// config LAN8710 reset 
+	// PHY_RESET#
+	//mxc_request_iomux(MX35_PIN_GPIO3_0, MUX_CONFIG_FUNC); 
+	//__REG(GPIO3_BASE_ADDR + 0x04) |= 1 << 0;       // set  output
+	__REG(GPIO3_BASE_ADDR + 0x00) |= 1 << 0;       // set  high
+	__REG(GPIO3_BASE_ADDR + 0x00) &= ~(1 << 0);       // set  low
+	udelay(1000*100);
+	__REG(GPIO3_BASE_ADDR + 0x00) |= 1 << 0;       // set  high
+	
 	fec_reset(dev);
 
 	fec_localhw_setup((fec_t *)fecp);

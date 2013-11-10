@@ -326,9 +326,13 @@ void start_armboot (void)
 	/* armboot_start is defined in the board-specific linker script */
 	mem_malloc_init (_armboot_start - CONFIG_SYS_MALLOC_LEN);
 
+	printf("nick. _armboot_start=0x%x, _bss_start=0x%x, monitor_flash_len=%d, CONFIG_SYS_MALLOC_LEN=%d\n", 
+		_armboot_start, _bss_start, monitor_flash_len, CONFIG_SYS_MALLOC_LEN);
+
 #ifndef CONFIG_SYS_NO_FLASH
 	/* configure available FLASH banks */
-	display_flash_config (flash_init ());
+	//nick20131109_3 disable SPI flash temeraly 
+	//display_flash_config (flash_init ());
 #endif /* CONFIG_SYS_NO_FLASH */
 
 #ifdef CONFIG_VFD
