@@ -100,10 +100,10 @@
 
 //nick20131110_01 add eth relative definitions start
 #define CONFIG_ETHADDR  00:D0:10:11:64:01
-/*#define CONFIG_IPADDR   192.168.1.251
-#define CONFIG_SERVERIP 192.168.1.1
-#define CONFIG_GATEWAYIP 192.168.1.1
-#define CONFIG_NETMASK  255.255.255.0*/
+#define CONFIG_IPADDR   192.168.0.109
+#define CONFIG_SERVERIP 192.168.0.3
+#define CONFIG_GATEWAYIP 192.168.0.1
+#define CONFIG_NETMASK  255.255.255.0
 //nick20131110_01 add eth relative definitions end
 
 
@@ -114,10 +114,10 @@
 		"uboot_addr=0xa0000000\0"				\
 		"uboot=u-boot.bin\0"			\
 		"kernel=uImage\0"				\
-		"nfsroot=/opt/eldk/arm\0"				\
+		"nfsroot=/home/user/freescale-sdk-imx35/ltib/rootfs\0"				\
 		"bootargs_base=setenv bootargs console=ttymxc0,115200\0"\
 		"bootargs_nfs=setenv bootargs ${bootargs} root=/dev/nfs "\
-			"ip=dhcp nfsroot=${serverip}:${nfsroot},v3,tcp\0"\
+			"ip=192.168.0.109 nfsroot=${serverip}:${nfsroot},v3,tcp\0"\
 		"bootcmd=run bootcmd_net\0"				\
 		"bootcmd_net=run bootargs_base bootargs_nfs; "		\
 			"tftpboot ${loadaddr} ${kernel}; bootm\0"	\

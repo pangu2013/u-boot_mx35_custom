@@ -156,12 +156,12 @@ int board_init(void)
 	// LED1_TEST
 	mxc_request_iomux(MX35_PIN_STXD5, MUX_CONFIG_GPIO);  
 	__REG(GPIO1_BASE_ADDR + 0x04) |= 1 << 0;       // set  output
-	__REG(GPIO1_BASE_ADDR + 0x00) |= 1 << 0;       // set  high
+	__REG(GPIO1_BASE_ADDR + 0x00) |= (1 << 0);       // set  high
 
 	// LED2_TEST
 	mxc_request_iomux(MX35_PIN_SRXD5, MUX_CONFIG_GPIO);  
 	__REG(GPIO1_BASE_ADDR + 0x04) |= 1 << 1;       // set  output
-	__REG(GPIO1_BASE_ADDR + 0x00) |= 1 << 1;       // set  high
+	__REG(GPIO1_BASE_ADDR + 0x00) &= ~(1 << 1);       // set  high
 
 	// LED flash light (module 1)
 	// LED_BOOST
