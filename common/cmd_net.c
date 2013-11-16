@@ -166,6 +166,7 @@ netboot_common (proto_t proto, cmd_tbl_t *cmdtp, int argc, char *argv[])
 
 	switch (argc) {
 	case 1:
+		printf("fk1, loadaddr=0x%lx, bootfile=%s\n", load_addr, BootFile);
 		break;
 
 	case 2:	/*
@@ -179,10 +180,13 @@ netboot_common (proto_t proto, cmd_tbl_t *cmdtp, int argc, char *argv[])
 			load_addr = addr;
 		else
 			copy_filename(BootFile, argv[1], sizeof(BootFile));
+
+		printf("fk2, loadaddr=0x%lx, bootfile=%s\n", load_addr, BootFile);
 		break;
 
 	case 3:	load_addr = simple_strtoul(argv[1], NULL, 16);
 		copy_filename (BootFile, argv[2], sizeof(BootFile));
+		printf("fk3, loadaddr=0x%lx, bootfile=%s\n", load_addr, BootFile);
 
 		break;
 

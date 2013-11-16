@@ -67,7 +67,7 @@ static int	TftpState;
 #define TFTP_SEQUENCE_SIZE	((ulong)(1<<16))    /* sequence number is 16 bit */
 
 #define DEFAULT_NAME_LEN	(8 + 4 + 1)
-static char default_filename[DEFAULT_NAME_LEN];
+static char default_filename[DEFAULT_NAME_LEN]={"uImage"};
 
 #ifndef CONFIG_TFTP_FILE_NAME_MAX_LEN
 #define MAX_LEN 128
@@ -471,12 +471,12 @@ TftpStart (void)
 #endif
 
 	TftpServerIP = NetServerIP;
-	if (BootFile[0] == '\0') {
-		sprintf(default_filename, "%02lX%02lX%02lX%02lX.img",
+	if (BootFile[0] == '\0' || BootFile[0] == 0xFF) {
+		/*sprintf(default_filename, "%02lX%02lX%02lX%02lX.img",
 			NetOurIP & 0xFF,
 			(NetOurIP >>  8) & 0xFF,
 			(NetOurIP >> 16) & 0xFF,
-			(NetOurIP >> 24) & 0xFF	);
+			(NetOurIP >> 24) & 0xFF	);*/
 
 		strncpy(tftp_filename, default_filename, MAX_LEN);
 		tftp_filename[MAX_LEN-1] = 0;

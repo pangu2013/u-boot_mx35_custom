@@ -115,10 +115,16 @@ static void BootpCopyNetParams(Bootp_t *bp)
 		NetCopyIP(&NetServerIP, &bp->bp_siaddr);
 	memcpy (NetServerEther, ((Ethernet_t *)NetRxPacket)->et_src, 6);
 #endif
-	if (strlen(bp->bp_file) > 0)
-		copy_filename (BootFile, bp->bp_file, sizeof(BootFile));
 
-	debug("Bootfile: %s\n", BootFile);
+//nick20131116 start
+/*  ignore this fucking bp_file from the DHCP_OFFER, or it will influence DHCP download */
+#if 0
+	if (strlen(bp->bp_file) > 0) {
+		copy_filename (BootFile, bp->bp_file, sizeof(BootFile));
+		printf("fk, bp_file: 0x%x\n", bp->bp_file[0]);
+	}
+#endif	
+//nick20131116 end	
 
 	/* Propagate to environment:
 	 * don't delete exising entry when BOOTP / DHCP reply does

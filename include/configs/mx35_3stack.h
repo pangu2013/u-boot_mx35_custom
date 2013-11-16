@@ -99,11 +99,13 @@
 #define CONFIG_LOADADDR		0x80800000	/* loadaddr env var */
 
 //nick20131110_01 add eth relative definitions start
+#define CONFIG_BOOTFILE uImage
 #define CONFIG_ETHADDR  00:D0:10:11:64:01
-#define CONFIG_IPADDR   192.168.0.109
+
 #define CONFIG_SERVERIP 192.168.0.3
-#define CONFIG_GATEWAYIP 192.168.0.1
-#define CONFIG_NETMASK  255.255.255.0
+/*#define CONFIG_GATEWAYIP 192.168.0.1
+#define CONFIG_IPADDR   192.168.0.109
+#define CONFIG_NETMASK  255.255.255.0*/
 //nick20131110_01 add eth relative definitions end
 
 
@@ -111,21 +113,28 @@
 #define	CONFIG_EXTRA_ENV_SETTINGS					\
 		"netdev=eth0\0"						\
 		"ethprime=FEC0\0"					\
-		"uboot_addr=0xa0000000\0"				\
+		"uboot_addr=0x00000000\0"				\
+		"kernel_addr=0x00300000\0"				\
+		"env_addr=0x100000\0"				\
+		"env_addr1=0x200000\0"				\
 		"uboot=u-boot.bin\0"			\
-		"kernel=uImage\0"				\
 		"nfsroot=/home/user/freescale-sdk-imx35/ltib/rootfs\0"				\
 		"bootargs_base=setenv bootargs console=ttymxc0,115200\0"\
 		"bootargs_nfs=setenv bootargs ${bootargs} root=/dev/nfs "\
-			"ip=192.168.0.109 nfsroot=${serverip}:${nfsroot},v3,tcp\0"\
+			"ip=dhcp nfsroot=${serverip}:${nfsroot},v3,tcp\0"\
 		"bootcmd=run bootcmd_net\0"				\
 		"bootcmd_net=run bootargs_base bootargs_nfs; "		\
-			"tftpboot ${loadaddr} ${kernel}; bootm\0"	\
-		"prg_uboot=tftpboot ${loadaddr} ${uboot}; "		\
-			"protect off ${uboot_addr} 0xa003ffff; "	\
-			"erase ${uboot_addr} 0xa003ffff; "		\
-			"cp.b ${loadaddr} ${uboot_addr} ${filesize}; "	\
-			"setenv filesize; saveenv\0"
+			"dhcp ${loadaddr} ${bootfile}; bootm\0"	\
+		"bootcmd_nand=run bootargs_base bootargs_nfs; "		\
+			"nand read ${loadaddr} ${kernel_addr} 0x200000; bootm\0"	\
+		"dl_uboot=dhcp ${loadaddr} ${uboot}; "		\
+			"nand erase ${uboot_addr} 0x30000; "	\
+			"nand write ${loadaddr} ${uboot_addr} 0x30000\0"    \
+		"dl_kernel=dhcp ${loadaddr} ${bootfile}; "		\
+			"nand erase ${kernel_addr} 0x200000; "	\
+			"nand write ${loadaddr} ${kernel_addr} 0x200000\0"	  \
+		"clean_env=nand erase ${env_addr} 0x20000; "	\
+			"nand erase ${env_addr1} 0x20000\0"
 
 /* nick20131014_02 disable SMC911X, there is no this module in our board */
 /*Support LAN9217*/
