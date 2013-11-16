@@ -100,7 +100,7 @@
 
 //nick20131110_01 add eth relative definitions start
 #define CONFIG_BOOTFILE uImage
-//#define CONFIG_ETHADDR  00:D0:10:11:64:01
+#define CONFIG_ETHADDR  00:D0:10:11:64:01
 
 #define CONFIG_SERVERIP 192.168.0.3
 /*#define CONFIG_GATEWAYIP 192.168.0.1
