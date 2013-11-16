@@ -100,7 +100,7 @@
 
 //nick20131110_01 add eth relative definitions start
 #define CONFIG_BOOTFILE uImage
-#define CONFIG_ETHADDR  00:D0:10:11:64:01
+//#define CONFIG_ETHADDR  00:D0:10:11:64:01
 
 #define CONFIG_SERVERIP 192.168.0.3
 /*#define CONFIG_GATEWAYIP 192.168.0.1
@@ -113,26 +113,36 @@
 #define	CONFIG_EXTRA_ENV_SETTINGS					\
 		"netdev=eth0\0"						\
 		"ethprime=FEC0\0"					\
+		"fec_addr=00:D0:10:11:64:01\0"					\
 		"uboot_addr=0x00000000\0"				\
 		"kernel_addr=0x00300000\0"				\
+		"fs_addr=0x00800000\0"				\
 		"env_addr=0x100000\0"				\
 		"env_addr1=0x200000\0"				\
 		"uboot=u-boot.bin\0"			\
+		"fsfile=rootfs.jffs2\0"			\
 		"nfsroot=/home/user/freescale-sdk-imx35/ltib/rootfs\0"				\
 		"bootargs_base=setenv bootargs console=ttymxc0,115200\0"\
 		"bootargs_nfs=setenv bootargs ${bootargs} root=/dev/nfs "\
 			"ip=dhcp nfsroot=${serverip}:${nfsroot},v3,tcp\0"\
-		"bootcmd=run bootcmd_net\0"				\
+		"bootargs_jfss2=setenv bootargs ${bootargs} noinitrd root=/dev/mtdblock2 rw "\
+			"rootfstype=jffs2 ip=dhcp \0"    \
+		"bootcmd=run bootcmd_nand_nfs\0"				\
 		"bootcmd_net=run bootargs_base bootargs_nfs; "		\
 			"dhcp ${loadaddr} ${bootfile}; bootm\0"	\
-		"bootcmd_nand=run bootargs_base bootargs_nfs; "		\
-			"nand read ${loadaddr} ${kernel_addr} 0x200000; bootm\0"	\
+		"bootcmd_nand_nfs=run bootargs_base bootargs_nfs; "		\
+			"nboot ${loadaddr} 0x0 ${kernel_addr}; bootm\0"	\
+		"bootcmd_nand_jfss2=run bootargs_base bootargs_jfss2; "		\
+			"nboot ${loadaddr} 0x0 ${kernel_addr}; bootm\0"	\
 		"dl_uboot=dhcp ${loadaddr} ${uboot}; "		\
 			"nand erase ${uboot_addr} 0x30000; "	\
 			"nand write ${loadaddr} ${uboot_addr} 0x30000\0"    \
 		"dl_kernel=dhcp ${loadaddr} ${bootfile}; "		\
 			"nand erase ${kernel_addr} 0x200000; "	\
 			"nand write ${loadaddr} ${kernel_addr} 0x200000\0"	  \
+		"dl_fs=dhcp ${loadaddr} ${fsfile}; "		\
+			"nand erase ${fs_addr} 0x400000; "	\
+			"nand write ${loadaddr} ${fs_addr} 0x400000\0"	  \
 		"clean_env=nand erase ${env_addr} 0x20000; "	\
 			"nand erase ${env_addr1} 0x20000\0"
 
